@@ -12,12 +12,14 @@ Image.register(:bone, 'images/bone.png')
 
 bn_x = 0
 
+GAME_INFO = {
+  scene: :title,  # 現在のシーン(起動直後は:title)
+}
+
 Window.load_resources do
   Window.width  = 800
   Window.height = 600
   
-  
-  #p Window.methods
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
 
@@ -57,17 +59,35 @@ Window.load_resources do
     bn_x -= 25
   end
   
+  
+  
   Window.loop do
+  
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
     
-    Sprite.update(enemies)
-    Sprite.draw(enemies)
+    case GAME_INFO[:scene]
+    
+        when :title
+            Window.draw_font(270, 300, "GAME START", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
+        
+            if Input.key_push?(K_SPACE)
+                GAME_INFO[:scene] = :playing
+            end
+    
+        when :playing
+            Sprite.update(enemies)
+            Sprite.draw(enemies)
 
-    player.update
-    player.draw
+            player.update
+            player.draw
 
-    # 当たり判定
-    Sprite.check(player, enemies)
+            # 当たり判定
+            Sprite.check(player, enemies)
+        
+            if Input.key_push?(K_ESCAPE)
+                GAME_INFO[:scene] = :title
+            end       
+      end
   end
 end
