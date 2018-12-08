@@ -11,7 +11,9 @@ Image.register(:enemy, 'images/enemy1.png')
 Window.load_resources do
   Window.width  = 800
   Window.height = 600
-
+  
+  
+  #p Window.methods
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
 
@@ -26,6 +28,8 @@ Window.load_resources do
   end
 
   Window.loop do
+    Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
+    Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
     Sprite.update(enemies)
     Sprite.draw(enemies)
 
