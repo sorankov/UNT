@@ -6,7 +6,7 @@ require_remote 'player.rb'
 require_remote 'enemy.rb'
 
 Image.register(:player, 'images/player.png') 
-Image.register(:enemy, 'images/enemy.png') 
+Image.register(:enemy, 'images/enemy1.png') 
 
 Window.load_resources do
   Window.width  = 800
@@ -21,7 +21,7 @@ Window.load_resources do
   player = Player.new(400, 500, player_img)
 
   enemies = []
-  10.times do
+  1000.times do
     enemies << Enemy.new(rand(800), rand(600), enemy_img)
   end
 
