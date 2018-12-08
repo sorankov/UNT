@@ -20,7 +20,7 @@ Window.load_resources do
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
 
-  player = Player.new(400, 500, player_img)
+  player = Player.new(384, 300, player_img)
 
   enemies = []
   10.times do
@@ -30,6 +30,7 @@ Window.load_resources do
   Window.loop do
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
+    
     Sprite.update(enemies)
     Sprite.draw(enemies)
 
