@@ -32,6 +32,15 @@ Window.load_resources do
   30.times do
     enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
   end
+  30.times do
+    enemies << Enemy.new(rand(800), rand(600)-1800, enemy_img, 5)
+  end
+  30.times do
+    enemies << Enemy.new(rand(800), rand(600)-3000, enemy_img, 5)
+  end
+  30.times do
+    enemies << Enemy.new(rand(800), rand(600)-4200, enemy_img, 5)
+  end
   
   Window.loop do
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
