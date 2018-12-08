@@ -3,6 +3,7 @@ require 'dxopal'
 include DXOpal
 
 require_remote 'player.rb'
+require_remote 'player2.rb'
 require_remote 'enemy.rb'
 
 Image.register(:player, 'images/player.png') 
@@ -20,8 +21,9 @@ Window.load_resources do
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
 
-  player = Player.new(384, 300, player_img)
-
+  player = Player2.new(384, 468, player_img)
+  #player2の時、y初期値468に変更
+  
   enemies = []
   30.times do
     enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
@@ -31,15 +33,6 @@ Window.load_resources do
   end
   30.times do
     enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
-  end
-  30.times do
-    enemies << Enemy.new(rand(800), rand(600)-1800, enemy_img, 5)
-  end
-  30.times do
-    enemies << Enemy.new(rand(800), rand(600)-3000, enemy_img, 5)
-  end
-  30.times do
-    enemies << Enemy.new(rand(800), rand(600)-4200, enemy_img, 5)
   end
   
   Window.loop do
