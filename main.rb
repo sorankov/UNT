@@ -9,8 +9,10 @@ require_remote 'bone.rb'
 Image.register(:player, 'images/player.png') 
 Image.register(:enemy, 'images/enemy1.png')
 Image.register(:bone, 'images/bone.png')
+Image.register(:bone2, 'images/bone2.png')
 
 bn_x = 0
+bn2_x = 0
 
 GAME_INFO = {
   scene: :title,  # 現在のシーン(起動直後は:title)
@@ -28,6 +30,10 @@ Window.load_resources do
   
   bone_img = Image[:bone]
   bone_img.set_color_key([0, 0, 0])
+  
+  bone2_img = Image[:bone2]
+  bone2_img.set_color_key([0, 0, 0])
+
 
   player = Player.new(384, 300, player_img)
 
@@ -50,13 +56,21 @@ Window.load_resources do
   30.times do
     enemies << Enemy.new(rand(800), rand(600)-4200, enemy_img, 5)
   end
-  50.times do
-    enemies << Bone.new(bn_x + 1400, 432, bone_img, 0)
-    bn_x -= 25
+  5.times do
+    enemies << Bone.new(bn_x + 700, 432, bone_img, 0)
+    bn_x -= 100
   end
-  50.times do
-    enemies << Bone.new(bn_x + 2400, 100, bone_img, 180)
-    bn_x -= 25
+  5.times do
+    enemies << Bone.new(bn2_x + 700, 432, bone2_img, 0)
+    bn2_x -= 100
+  end
+  5.times do
+    enemies << Bone.new(bn_x + 700, 100, bone_img, 180)
+    bn_x -= 100
+  end
+  5.times do
+    enemies << Bone.new(bn2_x + 700, 100, bone2_img, 180)
+    bn2_x -= 100
   end
   
   
