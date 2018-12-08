@@ -12,8 +12,6 @@ Window.load_resources do
   Window.width  = 800
   Window.height = 600
   
-  
-  #p Window.methods
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
 
