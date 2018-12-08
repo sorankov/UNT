@@ -2,7 +2,7 @@
 
 class Player < Sprite
   def update
-    self.x += Input.x * 2
-    self.y += Input.y * 2
+    self.x += Input.x * 5
+    self.y += Input.y * 5
   end
 end
