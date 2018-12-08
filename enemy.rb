@@ -12,4 +12,4 @@ class Enemy < Sprite
   def hit
     self.vanish
   end
-endgit
+end

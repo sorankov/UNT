@@ -12,19 +12,16 @@ Window.load_resources do
   Window.width  = 800
   Window.height = 600
   
+  
+  #p Window.methods
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
 
   enemy_img = Image[:enemy]
   enemy_img.set_color_key([0, 0, 0])
 
-<<<<<<< HEAD
   player = Player.new(384, 300, player_img)
 
-=======
-  player = Player.new(400, 500, player_img)
-  
->>>>>>> refs/heads/master
   enemies = []
   30.times do
     enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
