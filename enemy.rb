@@ -6,13 +6,13 @@ class Enemy < Sprite
     @speed = speed
   end
   def update
+    self.x += rand(8) - rand(8)
     self.y += @speed
-    self.x += rand(8)-rand(8)
     if self.y >= Window.height - self.image.height
       self.vanish
     end
   end
-  
+
   # 他のオブジェクトから衝突された際に呼ばれるメソッド
   def hit
     self.vanish
