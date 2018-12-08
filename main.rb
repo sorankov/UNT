@@ -21,12 +21,18 @@ Window.load_resources do
   enemy_img.set_color_key([0, 0, 0])
 
   player = Player.new(400, 500, player_img)
-
+  
   enemies = []
-  1000.times do
-    enemies << Enemy.new(rand(800), rand(600), enemy_img)
+  30.times do
+    enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
   end
-
+  30.times do
+    enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 3)
+  end
+  30.times do
+    enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
+  end
+  
   Window.loop do
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
