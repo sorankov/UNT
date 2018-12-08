@@ -1,8 +1,13 @@
 # coding: utf-8
 
 class Enemy < Sprite
+  def initialize(x,y,img,speed)
+    super(x,y,img)
+    @speed = speed
+  end
   def update
-    self.y += 1
+    self.x += rand(8) - rand(8)
+    self.y += @speed
     if self.y >= Window.height - self.image.height
       self.vanish
     end
