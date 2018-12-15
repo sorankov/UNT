@@ -9,6 +9,15 @@ class Laser < Sprite
   def update
     
   end
+  def hit
+    if $hp > 30
+        $hp -= 30
+        $hp_bar -= 45
+    else
+        $hp = 0
+        $hp_bar = 101
+    end
 
-end
+  end
+ end
   
