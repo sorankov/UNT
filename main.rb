@@ -168,7 +168,7 @@ Window.load_resources do
     return enemies3
   end
   
-   #エネミーメソッド4
+  #エネミーメソッド4
   def create_enemies4
     enemies4 = []
    
