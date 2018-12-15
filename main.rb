@@ -36,8 +36,8 @@ Window.load_resources do
   bone2_img = Image[:bone2]
   bone2_img.set_color_key([0, 0, 0])
   
- # laser_img = Image[:laser]
- # laser_img.set_color_key([0, 0, 0])
+  laser_img = Image[:laser]
+  laser_img.set_color_key([0, 0, 0])
   
   laser_img = Image[:laser2]
   laser_img.set_color_key([0, 0, 0])
@@ -60,6 +60,9 @@ Window.load_resources do
   
     bone2_img = Image[:bone2]
     bone2_img.set_color_key([0, 0, 0])
+    
+    laser_img = Image[:laser]
+    laser_img.set_color_key([0, 0, 0])
     
     laser2_img = Image[:laser2]
     laser2_img.set_color_key([0, 0, 0])
@@ -102,6 +105,9 @@ Window.load_resources do
     bone2_img = Image[:bone2]
     bone2_img.set_color_key([0, 0, 0])
     
+    laser_img = Image[:laser]
+    laser_img.set_color_key([0, 0, 0])
+    
     laser2_img = Image[:laser2]
     laser2_img.set_color_key([0, 0, 0])
     
@@ -128,12 +134,42 @@ Window.load_resources do
     
     return enemies2
   end
+   #エネミーメソッド4
+  def create_enemies4
+    enemies4 = []
+   
+    enemy_img = Image[:enemy]
+    enemy_img.set_color_key([0, 0, 0])
+  
+    bone_img = Image[:bone]
+    bone_img.set_color_key([0, 0, 0])
+  
+    bone2_img = Image[:bone2]
+    bone2_img.set_color_key([0, 0, 0])
+    
+    laser_img = Image[:laser]
+    laser_img.set_color_key([0, 0, 0])
+    
+    laser2_img = Image[:laser2]
+    laser2_img.set_color_key([0, 0, 0])
+    
+    3.times do
+      enemies4 << Laser.new(160 , rand(600)-100, laser_img, 0)
+    end  
+    
+    
+    
+    
+    
+    return enemies4
+  end
   
   
   
   
   enemies = create_enemies
   enemies2 = create_enemies2
+  enemies4 = create_enemies4
 
 
   $hp = 100
@@ -211,7 +247,41 @@ Window.load_resources do
                 $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
-            end       
+            end
+            
+            if Input.key_push?(K_RETURN)
+                p Player2
+                player = Player.new(384, 368, player_img)
+                player2 = Player2.new(384, 468, player_img)
+                enemies2 = create_enemies2
+                $hp = 100
+                $hp_bar = 248
+                GAME_INFO[:scene] = :playing4
+            end
+            
+         when :playing4
+            
+            Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
+            Sprite.update(enemies4)
+            Sprite.draw(enemies4)
+
+            player.update
+            player.draw
+
+            # 当たり判定
+            Sprite.check(player, enemies4)
+            
+            #ESCキーでリセット
+            if Input.key_push?(K_ESCAPE)
+                p Player
+                player = Player.new(384, 368, player_img)
+                player2 = Player2.new(384, 468, player_img)
+                enemies2 = create_enemies2
+                enemies4 = create_enemies4
+                $hp = 100
+                $hp_bar = 248
+                GAME_INFO[:scene] = :title
+            end          
       end
   end
 end
