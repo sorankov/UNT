@@ -15,6 +15,8 @@ Image.register(:bone, 'images/bone.png')
 Image.register(:bone2, 'images/bone2.png')
 Image.register(:laser, 'images/laser.png')
 Image.register(:laser2, 'images/laser2.png')
+Image.register(:flawey, 'images/flawey.png')
+Image.register(:flawey2, 'images/flawey2.png')
 
 GAME_INFO = {
   scene: :title,  # 現在のシーン(起動直後は:title)
@@ -41,6 +43,13 @@ Window.load_resources do
   
   laser_img = Image[:laser2]
   laser_img.set_color_key([0, 0, 0])
+  
+  flawey_img = Image[:flawey]
+  flawey_img.set_color_key([0, 0, 0])
+  
+  flawey2_img = Image[:flawey2]
+  flawey2_img.set_color_key([0, 0, 0])
+ 
 
 
   player = Player.new(384, 368, player_img)
