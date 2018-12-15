@@ -212,7 +212,6 @@ Window.load_resources do
     Window.draw_font(150, 520, "#{$hp} / 100", Font.new( 30, fontname="Arial",0 ))
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
-#    Window.draw(100, 100, Image[:flawey])
     Window.draw( 5, 100, Image[:flawey])
     Window.draw( 605, 100, Image[:flawey2])
     
@@ -263,33 +262,6 @@ Window.load_resources do
             #HP0でゲームオーバー
             if $hp == 0
                 GAME_INFO[:scene] = :gameover
-<<<<<<< HEAD
-            end
-=======
-            end  
->>>>>>> refs/heads/kov
-            
-        #ゲーム画面2
-        when :playing2
-            
-            Window.draw_font(580, 580, "Press Esc to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
-            Sprite.update(enemies2)
-            Sprite.draw(enemies2)
-
-            player2.update
-            player2.draw
-
-            # 当たり判定
-            Sprite.check(player2, enemies2)
-            
-            #ESCキーでリセット
-            if Input.key_push?(K_ESCAPE)
-                player2 = Player2.new(384, 468, player_img)
-                enemies2 = create_enemies2
-                $hp = 100
-                $hp_bar = 248
-                GAME_INFO[:scene] = :title
-<<<<<<< HEAD
             end
             
             if Input.key_push?(K_RETURN)
@@ -388,15 +360,6 @@ Window.load_resources do
                 GAME_INFO[:scene] = :gameover
             end
             
-=======
-            end   
-            
-            #HP0でゲームオーバー
-            if $hp == 0
-                GAME_INFO[:scene] = :gameover
-            end   
-                
->>>>>>> refs/heads/kov
         #ゲームオーバー画面    
         when :gameover
             Window.draw_font(280, 280, "GAME OVER", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
