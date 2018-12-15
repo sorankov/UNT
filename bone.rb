@@ -6,7 +6,7 @@ class Bone < Sprite
     @angle = angle
   end
   def update
-    self.x -= 1
+    self.x -= 2
     self.angle = @angle
     if self.y >= Window.height - self.image.height
       self.vanish

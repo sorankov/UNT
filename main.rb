@@ -12,9 +12,6 @@ Image.register(:enemy, 'images/enemy1.png')
 Image.register(:bone, 'images/bone.png')
 Image.register(:bone2, 'images/bone2.png')
 
-bn_x = 0
-bn2_x = 0
-
 GAME_INFO = {
   scene: :title,  # 現在のシーン(起動直後は:title)
 }
@@ -57,35 +54,35 @@ Window.load_resources do
     bn2_x = 0
     
     30.times do
-        enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
+      enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
     end
-    
     30.times do
-        enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 3)
+      enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 3)
     end
-    
     30.times do
-        enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
+      enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
     end
-    
-    5.times do
-        enemies << Bone.new(bn_x + 700, 432, bone_img, 0)
-        bn_x -= 100
+    30.times do
+      enemies << Enemy.new(rand(800), rand(600)-1800, enemy_img, 5)
     end
-   
-    5.times do
-        enemies << Bone.new(bn2_x + 700, 432, bone2_img, 0)
-        bn2_x -= 100
+    30.times do
+      enemies << Enemy.new(rand(800), rand(600)-3000, enemy_img, 5)
     end
-    
     5.times do
-        enemies << Bone.new(bn_x + 700, 100, bone_img, 180)
-        bn_x -= 100
+      enemies << Bone.new(bn_x + 2400, 432, bone_img, 0)
+      bn_x -= 400
     end
-    
     5.times do
-        enemies << Bone.new(bn2_x + 700, 100, bone2_img, 180)
-        bn2_x -= 100
+      enemies << Bone.new(bn2_x + 2600, 355, bone2_img, 0)
+      bn2_x -= 400
+    end
+    5.times do
+      enemies << Bone.new(bn_x + 3000, 100, bone_img, 180)
+      bn_x += 400
+    end
+    5.times do
+      enemies << Bone.new(bn2_x + 2800, 100, bone2_img, 180)
+      bn2_x += 400
     end
     
     return enemies
