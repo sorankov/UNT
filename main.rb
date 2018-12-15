@@ -126,12 +126,20 @@ Window.load_resources do
             Sprite.check(player, enemies)
             
             #ESCキーでリセット
-            if Input.key_push?(K_ESCAPE)
+            if Input.key_push?(K_RETURN)
                 player = Player2.new(384, 468, player_img)
                 enemies = create_enemies
                 $hp = 3
                 $hp_bar = 248
                 GAME_INFO[:scene] = :playing2
+            end       
+            
+            if Input.key_push?(K_ESCAPE)
+                player = Player2.new(384, 468, player_img)
+                enemies = create_enemies
+                $hp = 3
+                $hp_bar = 248
+                GAME_INFO[:scene] = :title
             end       
         
         when :playing2
