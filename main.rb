@@ -6,6 +6,8 @@ require_remote 'player.rb'
 require_remote 'player2.rb'
 require_remote 'enemy.rb'
 require_remote 'bone.rb'
+require_remote 'ball.rb'
+require_remote 'ball_break.rb'
 
 Image.register(:player, 'images/player.png') 
 Image.register(:enemy, 'images/enemy1.png')
@@ -116,13 +118,19 @@ Window.load_resources do
   #エネミーメソッド3
   def create_enemies3
     enemies3 = []
-    ball_img = Image[:ball]#.slice_tiles(2, 2)
-    #(0..3).each do |num|
-      #ball_img[num].set_color_key([0, 0, 0])
-    #end
-    100.times do
-      enemies3 << Enemy.new(rand(800), rand(600), ball_img, 2)
+    ball_img = Image[:ball]
+    ball_img.set_color_key([0, 0, 0])
+    
+    10.times do
+        enemies3 << Ball.new(rand(800), rand(600)-600, ball_img, 2)
     end
+    10.times do
+        enemies3 << Ball.new(rand(800), rand(600)-1200, ball_img, 2)
+    end
+    10.times do
+        enemies3 << Ball.new(rand(800), rand(600)-1800, ball_img, 2)
+    end
+    
     return enemies3
   end
   
@@ -217,13 +225,29 @@ Window.load_resources do
                 $hp_bar = 248
                 GAME_INFO[:scene] = :playing3
             end
-        #ゲーム画面2
+        #ゲーム画面3
         when :playing3
-            
+            ball_break_img = Image[:ball].slice_tiles(2, 2)
+            (0..3).each do |num|
+                 ball_break_img[num].set_color_key([0, 0, 0])
+            end
             Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
+            
+            enemies3.each do |enemy|
+                if enemy.class == Ball && !enemy.vanished?
+                    p enemy.y
+                    if enemy.y > 245
+                        enemies3 << Break.new(enemy.x-5, 250-5, ball_break_img[0], 5, 0)
+                        enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[1], 5, 1)
+                        enemies3 << Break.new(enemy.x-5, 250+5, ball_break_img[2], 5, 2)
+                        enemies3 << Break.new(enemy.x+5, 250+5, ball_break_img[3], 5, 3)
+                    end
+                end
+            end
             Sprite.update(enemies3)
             Sprite.draw(enemies3)
-
+            
+            p enemies3.count
             player.update
             player.draw
 
