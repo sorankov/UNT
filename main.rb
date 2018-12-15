@@ -33,13 +33,15 @@ Window.load_resources do
   bone2_img.set_color_key([0, 0, 0])
 
 
-  player = Player2.new(384, 468, player_img)
-  #player2の時、y初期値468に変更
+  player = Player.new(384, 368, player_img)
+  player2 = Player2.new(384, 468, player_img)
+  
   
  
   #エネミーメソッド
   def create_enemies
     enemies = []
+    enemies2 = []
    
     enemy_img = Image[:enemy]
     enemy_img.set_color_key([0, 0, 0])
@@ -68,27 +70,49 @@ Window.load_resources do
     30.times do
       enemies << Enemy.new(rand(800), rand(600)-3000, enemy_img, 5)
     end
-    5.times do
-      enemies << Bone.new(bn_x + 2400, 432, bone_img, 0)
-      bn_x -= 400
-    end
-    5.times do
-      enemies << Bone.new(bn2_x + 2600, 355, bone2_img, 0)
-      bn2_x -= 400
-    end
-    5.times do
-      enemies << Bone.new(bn_x + 3000, 100, bone_img, 180)
-      bn_x += 400
-    end
-    5.times do
-      enemies << Bone.new(bn2_x + 2800, 100, bone2_img, 180)
-      bn2_x += 400
-    end
     
     return enemies
   end
   
+  #エネミーメソッド2
+  def create_enemies2
+    enemies2 = []
+   
+    enemy_img = Image[:enemy]
+    enemy_img.set_color_key([0, 0, 0])
+  
+    bone_img = Image[:bone]
+    bone_img.set_color_key([0, 0, 0])
+  
+    bone2_img = Image[:bone2]
+    bone2_img.set_color_key([0, 0, 0])
+    
+    bn_x = 0
+    bn2_x = 0
+    
+    5.times do
+      enemies2 << Bone.new(bn_x + 2400, 432, bone_img, 0)
+      bn_x -= 400
+    end
+    5.times do
+      enemies2 << Bone.new(bn2_x + 2600, 355, bone2_img, 0)
+      bn2_x -= 400
+    end
+    5.times do
+      enemies2 << Bone.new(bn_x + 3000, 100, bone_img, 180)
+      bn_x += 400
+    end
+    5.times do
+      enemies2 << Bone.new(bn2_x + 2800, 100, bone2_img, 180)
+      bn2_x += 400
+    end
+    
+    return enemies2
+  end
+  
   enemies = create_enemies
+  enemies2 = create_enemies2
+
 
   $hp = 3
   $hp_bar = 248
@@ -127,9 +151,38 @@ Window.load_resources do
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
+                p Player
+                player = Player.new(384, 368, player_img)
+                enemies = create_enemies
+                $hp = 3
+                $hp_bar = 248
+                GAME_INFO[:scene] = :title
+            end
+            if Input.key_push?(K_RETURN)
+                p Player
+                player = Player.new(384, 368, player_img)
+                enemies = create_enemies
+                $hp = 3
+                $hp_bar = 248
+                GAME_INFO[:scene] = :playing2
+            end
+        #ゲーム画面2
+        when :playing2
+            Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
+            Sprite.update(enemies2)
+            Sprite.draw(enemies2)
+
+            player2.update
+            player2.draw
+
+            # 当たり判定
+            Sprite.check(player2, enemies)
+            
+            #ESCキーでリセット
+            if Input.key_push?(K_ESCAPE)
                 p Player2
                 player = Player2.new(384, 468, player_img)
-                enemies = create_enemies
+                enemies2 = create_enemies2
                 $hp = 3
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
