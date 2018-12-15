@@ -148,6 +148,26 @@ Window.load_resources do
     
     return enemies2
   end
+  
+  #エネミーメソッド3
+  def create_enemies3
+    enemies3 = []
+    ball_img = Image[:ball]
+    ball_img.set_color_key([0, 0, 0])
+    
+    10.times do
+        enemies3 << Ball.new(rand(800), rand(600)-600, ball_img, 2)
+    end
+    10.times do
+        enemies3 << Ball.new(rand(800), rand(600)-1200, ball_img, 2)
+    end
+    10.times do
+        enemies3 << Ball.new(rand(800), rand(600)-1800, ball_img, 2)
+    end
+    
+    return enemies3
+  end
+  
    #エネミーメソッド4
   def create_enemies4
     enemies4 = []
@@ -171,34 +191,9 @@ Window.load_resources do
       enemies4 << Laser.new(160 , rand(600)-100, laser_img, 0)
     end  
     
-    
-    
-    
-    
     return enemies4
   end
   
-  
-  
-  
-  #エネミーメソッド3
-  def create_enemies3
-    enemies3 = []
-    ball_img = Image[:ball]
-    ball_img.set_color_key([0, 0, 0])
-    
-    10.times do
-        enemies3 << Ball.new(rand(800), rand(600)-600, ball_img, 2)
-    end
-    10.times do
-        enemies3 << Ball.new(rand(800), rand(600)-1200, ball_img, 2)
-    end
-    10.times do
-        enemies3 << Ball.new(rand(800), rand(600)-1800, ball_img, 2)
-    end
-    
-    return enemies3
-  end
   
   enemies = create_enemies
   enemies2 = create_enemies2
