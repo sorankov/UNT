@@ -6,12 +6,14 @@ require_remote 'player.rb'
 require_remote 'player2.rb'
 require_remote 'enemy.rb'
 require_remote 'bone.rb'
+require_remote 'laser.rb'
 require_remote 'laser2.rb'
 
 Image.register(:player, 'images/player.png') 
 Image.register(:enemy, 'images/enemy1.png')
 Image.register(:bone, 'images/bone.png')
 Image.register(:bone2, 'images/bone2.png')
+Image.register(:laser, 'images/laser.png')
 Image.register(:laser2, 'images/laser2.png')
 
 GAME_INFO = {
@@ -34,11 +36,11 @@ Window.load_resources do
   bone2_img = Image[:bone2]
   bone2_img.set_color_key([0, 0, 0])
   
+ # laser_img = Image[:laser]
+ # laser_img.set_color_key([0, 0, 0])
+  
   laser_img = Image[:laser2]
   laser_img.set_color_key([0, 0, 0])
-
-
-
 
 
   player = Player.new(384, 368, player_img)
