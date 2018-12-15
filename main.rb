@@ -212,6 +212,7 @@ Window.load_resources do
     Window.draw_font(150, 520, "#{$hp} / 100", Font.new( 30, fontname="Arial",0 ))
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
+#    Window.draw(100, 100, Image[:flawey])
     Window.draw( 5, 100, Image[:flawey])
     Window.draw( 605, 100, Image[:flawey2])
     
@@ -251,7 +252,6 @@ Window.load_resources do
                 GAME_INFO[:scene] = :title
             end
             
-            #ウェーブ2移行
             if Input.key_push?(K_RETURN)
                 p Player
                 player = Player.new(384, 468, player_img)
@@ -262,23 +262,45 @@ Window.load_resources do
             #HP0でゲームオーバー
             if $hp == 0
                 GAME_INFO[:scene] = :gameover
+            end 
+            
+        #ゲーム画面2
+        when :playing2
+            
+            Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
+            Sprite.update(enemies2)
+            Sprite.draw(enemies2)
+
+            player2.update
+            player2.draw
+
+            # 当たり判定
+            Sprite.check(player2, enemies2)
+            
+            #ESCキーでリセット
+            if Input.key_push?(K_ESCAPE)
+                p Player2
+                player = Player.new(384, 368, player_img)
+                player2 = Player2.new(384, 468, player_img)
+                enemies2 = create_enemies2
+                $hp = 100
+                $hp_bar = 248
+                GAME_INFO[:scene] = :title
             end
             
             if Input.key_push?(K_RETURN)
                 p Player
                 player = Player.new(384, 368, player_img)
                 enemies = create_enemies
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :playing3
             end
-            
+       
             #HP0でゲームオーバー
             if $hp == 0
                 GAME_INFO[:scene] = :gameover
-            end
+            end 
             
-        #ゲーム画面3
+       #ゲーム画面3
         when :playing3
             player.update
             player.draw
@@ -321,16 +343,14 @@ Window.load_resources do
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :playing4
             end
             
             #HP0でゲームオーバー
             if $hp == 0
                 GAME_INFO[:scene] = :gameover
-            end
-            
+            end 
+        
          when :playing4
             
             Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
@@ -350,15 +370,13 @@ Window.load_resources do
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
                 enemies4 = create_enemies4
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :title
             end
             
             #HP0でゲームオーバー
             if $hp == 0
                 GAME_INFO[:scene] = :gameover
-            end
+            end 
             
         #ゲームオーバー画面    
         when :gameover
@@ -369,6 +387,8 @@ Window.load_resources do
                 player2 = Player2.new(384, 468, player_img)
                 enemies = create_enemies
                 enemies2 = create_enemies2
+                enemies3 = create_enemies3
+                enemies4 = create_enemies4
                 $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :playing
