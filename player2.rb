@@ -10,7 +10,7 @@ class Player2 < Sprite
   end
 
   def update
-    if Input.key_push?(K_UP)
+    if Input.key_push?(K_SPACE)
         @jump = 1
         p "up"
     end
