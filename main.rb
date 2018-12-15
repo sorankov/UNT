@@ -39,34 +39,60 @@ Window.load_resources do
   player = Player2.new(384, 468, player_img)
   #player2の時、y初期値468に変更
   
-  enemies = []
-  30.times do
-    enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
-  end
-  30.times do
-    enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 3)
-  end
-  30.times do
-    enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
-  end
-  5.times do
-    enemies << Bone.new(bn_x + 700, 432, bone_img, 0)
-    bn_x -= 100
-  end
-  5.times do
-    enemies << Bone.new(bn2_x + 700, 432, bone2_img, 0)
-    bn2_x -= 100
-  end
-  5.times do
-    enemies << Bone.new(bn_x + 700, 100, bone_img, 180)
-    bn_x -= 100
-  end
-  5.times do
-    enemies << Bone.new(bn2_x + 700, 100, bone2_img, 180)
-    bn2_x -= 100
+ 
+  #エネミーメソッド
+  def create_enemies
+    enemies = []
+   
+    enemy_img = Image[:enemy]
+    enemy_img.set_color_key([0, 0, 0])
+  
+    bone_img = Image[:bone]
+    bone_img.set_color_key([0, 0, 0])
+  
+    bone2_img = Image[:bone2]
+    bone2_img.set_color_key([0, 0, 0])
+    
+    bn_x = 0
+    bn2_x = 0
+    
+    30.times do
+        enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 1)
+    end
+    
+    30.times do
+        enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 3)
+    end
+    
+    30.times do
+        enemies << Enemy.new(rand(800), rand(600)-600, enemy_img, 5)
+    end
+    
+    5.times do
+        enemies << Bone.new(bn_x + 700, 432, bone_img, 0)
+        bn_x -= 100
+    end
+   
+    5.times do
+        enemies << Bone.new(bn2_x + 700, 432, bone2_img, 0)
+        bn2_x -= 100
+    end
+    
+    5.times do
+        enemies << Bone.new(bn_x + 700, 100, bone_img, 180)
+        bn_x -= 100
+    end
+    
+    5.times do
+        enemies << Bone.new(bn2_x + 700, 100, bone2_img, 180)
+        bn2_x -= 100
+    end
+    
+    return enemies
   end
   
-  
+  enemies = create_enemies
+
   
   Window.loop do
   
@@ -74,14 +100,16 @@ Window.load_resources do
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
     
     case GAME_INFO[:scene]
-    
+        
+        #タイトル画面
         when :title
             Window.draw_font(270, 300, "GAME START", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
         
             if Input.key_push?(K_SPACE)
                 GAME_INFO[:scene] = :playing
             end
-    
+        
+        #ゲーム画面
         when :playing
             Sprite.update(enemies)
             Sprite.draw(enemies)
@@ -91,8 +119,12 @@ Window.load_resources do
 
             # 当たり判定
             Sprite.check(player, enemies)
-        
+            
+            #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
+                p Player2
+                player = Player2.new(384, 468, player_img)
+                enemies = create_enemies
                 GAME_INFO[:scene] = :title
             end       
       end
