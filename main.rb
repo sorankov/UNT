@@ -153,6 +153,7 @@ Window.load_resources do
             if Input.key_push?(K_ESCAPE)
                 p Player
                 player = Player.new(384, 368, player_img)
+                player2 = Player2.new(384, 468, player_img)
                 enemies = create_enemies
                 $hp = 100
                 $hp_bar = 248
@@ -160,7 +161,7 @@ Window.load_resources do
             end
             if Input.key_push?(K_RETURN)
                 p Player
-                player = Player.new(384, 368, player_img)
+                player = Player.new(384, 468, player_img)
                 enemies = create_enemies
                 $hp = 100
                 $hp_bar = 248
@@ -168,6 +169,7 @@ Window.load_resources do
             end
         #ゲーム画面2
         when :playing2
+            
             Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
             Sprite.update(enemies2)
             Sprite.draw(enemies2)
@@ -181,7 +183,8 @@ Window.load_resources do
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
                 p Player2
-                player = Player2.new(384, 468, player_img)
+                player = Player.new(384, 368, player_img)
+                player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
                 $hp = 100
                 $hp_bar = 248
