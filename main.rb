@@ -90,7 +90,7 @@ Window.load_resources do
   
   enemies = create_enemies
 
-  $hp = 3
+  $hp = 100
   $hp_bar = 248
   
   Window.loop do
@@ -98,7 +98,7 @@ Window.load_resources do
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
     Window.draw_font(100, 520, "HP", Font.new( 30, fontname="Arial",0 ))
-    Window.draw_font(150, 520, "#{$hp} / 3", Font.new( 30, fontname="Arial",0 ))
+    Window.draw_font(150, 520, "#{$hp} / 100", Font.new( 30, fontname="Arial",0 ))
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
     
@@ -130,7 +130,7 @@ Window.load_resources do
                 p Player2
                 player = Player2.new(384, 468, player_img)
                 enemies = create_enemies
-                $hp = 3
+                $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
             end       

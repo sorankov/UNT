@@ -15,6 +15,13 @@ class Enemy < Sprite
 
   # 他のオブジェクトから衝突された際に呼ばれるメソッド
   def hit
+    if $hp > 5
+        $hp -= 5
+        $hp_bar -= 7.5
+    else
+        $hp = 0
+        $hp_bar = 101
+    end
     self.vanish
   end
 end
