@@ -162,7 +162,7 @@ Window.load_resources do
                 p Player
                 player = Player.new(384, 368, player_img)
                 enemies = create_enemies
-                $hp = 3
+                $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :playing2
             end
@@ -183,7 +183,7 @@ Window.load_resources do
                 p Player2
                 player = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
-                $hp = 3
+                $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
             end       
