@@ -10,8 +10,7 @@ class Player2 < Sprite
     @is_jump = false
     @high_jump = false
     super
- 
-  end
+ end
   
   #スペース押下中でカウント
   def update
@@ -65,8 +64,6 @@ class Player2 < Sprite
                 @jump = 0
             end
         end
-        
     end
-    
   end
 end

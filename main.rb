@@ -159,18 +159,24 @@ Window.load_resources do
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
             end
+            
+            #ウェーブ2移行
             if Input.key_push?(K_RETURN)
                 p Player
                 player = Player.new(384, 468, player_img)
                 enemies = create_enemies
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :playing2
             end
+            
+            #HP0でゲームオーバー
+            if $hp == 0
+                GAME_INFO[:scene] = :gameover
+            end  
+            
         #ゲーム画面2
         when :playing2
             
-            Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(580, 580, "Press Esc to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
             Sprite.update(enemies2)
             Sprite.draw(enemies2)
 
@@ -178,18 +184,35 @@ Window.load_resources do
             player2.draw
 
             # 当たり判定
-            Sprite.check(player2, enemies)
+            Sprite.check(player2, enemies2)
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
-                p Player2
-                player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
                 $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
-            end       
+            end   
+            
+            #HP0でゲームオーバー
+            if $hp == 0
+                GAME_INFO[:scene] = :gameover
+            end   
+                
+        #ゲームオーバー画面    
+        when :gameover
+            Window.draw_font(280, 280, "GAME OVER", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(340, 320, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
+            if Input.key_push?(K_ESCAPE)
+                player = Player.new(384, 468, player_img)
+                player2 = Player2.new(384, 468, player_img)
+                enemies = create_enemies
+                enemies2 = create_enemies2
+                $hp = 100
+                $hp_bar = 248
+                GAME_INFO[:scene] = :playing
+            end
       end
   end
 end
