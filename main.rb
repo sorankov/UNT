@@ -6,11 +6,14 @@ require_remote 'player.rb'
 require_remote 'player2.rb'
 require_remote 'enemy.rb'
 require_remote 'bone.rb'
+require_remote 'laser.rb'
+
 
 Image.register(:player, 'images/player.png') 
 Image.register(:enemy, 'images/enemy1.png')
 Image.register(:bone, 'images/bone.png')
 Image.register(:bone2, 'images/bone2.png')
+Image.register(:laser, 'images/laser.png')
 
 GAME_INFO = {
   scene: :title,  # 現在のシーン(起動直後は:title)
@@ -32,6 +35,10 @@ Window.load_resources do
   bone2_img = Image[:bone2]
   bone2_img.set_color_key([0, 0, 0])
 
+  laser_img = Image[:laser]
+  laser_img.set_color_key([0, 0, 0])
+
+
 
   player = Player2.new(384, 468, player_img)
   #player2の時、y初期値468に変更
@@ -49,6 +56,9 @@ Window.load_resources do
   
     bone2_img = Image[:bone2]
     bone2_img.set_color_key([0, 0, 0])
+    
+    laser_img = Image[:laser]
+    laser_img.set_color_key([0, 0, 0])
     
     bn_x = 0
     bn2_x = 0
@@ -83,6 +93,9 @@ Window.load_resources do
     5.times do
       enemies << Bone.new(bn2_x + 2800, 100, bone2_img, 180)
       bn2_x += 400
+    end
+    1.times do
+      enemies << laser.new(x = 0, 100, laser_img, 180)
     end
     
     return enemies
