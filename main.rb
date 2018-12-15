@@ -95,6 +95,10 @@ Window.load_resources do
   
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
+    Window.draw_font(100, 520, "HP", Font.new( 30, fontname="Arial",0 ))
+    Window.draw_font(150, 520, "3 / 3", Font.new( 30, fontname="Arial",0 ))
+    Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
+    Window.draw_box_fill(102, 552, 248, 578, [255, 255, 255, 255], 0)
     
     case GAME_INFO[:scene]
         
