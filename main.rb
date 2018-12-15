@@ -127,13 +127,33 @@ Window.load_resources do
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
-                p Player2
+                player = Player2.new(384, 468, player_img)
+                enemies = create_enemies
+                $hp = 3
+                $hp_bar = 248
+                GAME_INFO[:scene] = :playing2
+            end       
+        
+        when :playing2
+            Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
+            Sprite.update(enemies)
+            Sprite.draw(enemies)
+
+            player.update
+            player.draw
+
+            # 当たり判定
+            Sprite.check(player, enemies)
+            
+            #ESCキーでリセット
+            if Input.key_push?(K_ESCAPE)
                 player = Player2.new(384, 468, player_img)
                 enemies = create_enemies
                 $hp = 3
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
-            end       
+            end           
+        
       end
   end
 end
