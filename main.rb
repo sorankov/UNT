@@ -13,8 +13,10 @@ Image.register(:player, 'images/player.png')
 Image.register(:enemy, 'images/enemy1.png')
 Image.register(:bone, 'images/bone.png')
 Image.register(:bone2, 'images/bone2.png')
+
 Image.register(:laser, 'images/laser.png')
 Image.register(:laser2, 'images/laser2.png')
+
 Image.register(:flawey, 'images/flawey.png')
 Image.register(:flawey2, 'images/flawey2.png')
 
@@ -50,8 +52,6 @@ Window.load_resources do
   flawey2_img = Image[:flawey2]
   flawey2_img.set_color_key([0, 0, 0])
  
-
-
   player = Player.new(384, 368, player_img)
   player2 = Player2.new(384, 468, player_img)
   
@@ -192,6 +192,11 @@ Window.load_resources do
     Window.draw_font(150, 520, "#{$hp} / 100", Font.new( 30, fontname="Arial",0 ))
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
+#    Window.draw(100, 100, Image[:flawey])
+    Window.draw( 5, 100, Image[:flawey])
+    Window.draw( 605, 100, Image[:flawey2])
+    
+
     
     case GAME_INFO[:scene]
         
