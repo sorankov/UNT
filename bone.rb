@@ -15,6 +15,8 @@ class Bone < Sprite
   
   # 他のオブジェクトから衝突された際に呼ばれるメソッド
   def hit
+    $hp -= 1
+    $hp_bar -= 49
     self.vanish
   end
 end
