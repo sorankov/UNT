@@ -6,7 +6,7 @@ class Laser2 < Sprite
     @angle = angle
   end
   def update
-    if $time_count == 120
+    if $time_count == 90
         $laser_f = 1
     end
   end
