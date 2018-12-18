@@ -2,13 +2,22 @@
 
 class Laser2 < Sprite
   def initialize(x,y,img,angle)
-    #y = rand(Window.width - image.width)  # y座標をランダムに決める
     super(x,y,img)
     @angle = angle
   end
   def update
-    
+    if $time_count == 90
+        $laser_f = 1
+    end
   end
-
+  def hit
+    if $hp > 1
+        $hp -= 1
+        $hp_bar -= 1.5
+    else
+        $hp = 0
+        $hp_bar = 101
+    end
+  end
 end
   

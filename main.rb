@@ -19,7 +19,9 @@ Image.register(:ball, 'images/ball.png')
 Image.register(:player_dead, 'images/player_dead.png')
 Image.register(:player_dead2, 'images/player_dead2.png')
 
+Image.register(:laser_base, 'images/laser_base.png')
 Image.register(:laser, 'images/laser.png')
+Image.register(:laser_base2, 'images/laser_base2.png')
 Image.register(:laser2, 'images/laser2.png')
 
 Image.register(:flawey, 'images/flawey.png')
@@ -35,21 +37,6 @@ Window.load_resources do
   
   player_img = Image[:player]
   player_img.set_color_key([0, 0, 0])
-
-  enemy_img = Image[:enemy]
-  enemy_img.set_color_key([0, 0, 0])
-  
-  bone_img = Image[:bone]
-  bone_img.set_color_key([0, 0, 0])
-  
-  bone2_img = Image[:bone2]
-  bone2_img.set_color_key([0, 0, 0])
-  
-  laser_img = Image[:laser]
-  laser_img.set_color_key([0, 0, 0])
-  
-  laser_img = Image[:laser2]
-  laser_img.set_color_key([0, 0, 0])
   
   flawey_img = Image[:flawey]
   flawey_img.set_color_key([0, 0, 0])
@@ -67,22 +54,7 @@ Window.load_resources do
     enemies = []
    
     enemy_img = Image[:enemy]
-    enemy_img.set_color_key([0, 0, 0])
-  
-    bone_img = Image[:bone]
-    bone_img.set_color_key([0, 0, 0])
-  
-    bone2_img = Image[:bone2]
-    bone2_img.set_color_key([0, 0, 0])
-    
-    laser_img = Image[:laser]
-    laser_img.set_color_key([0, 0, 0])
-    
-    laser2_img = Image[:laser2]
-    laser2_img.set_color_key([0, 0, 0])
-    
-    
-    
+    enemy_img.set_color_key([0, 0, 0])  
     
     bn_x = 0
     bn2_x = 0
@@ -110,20 +82,11 @@ Window.load_resources do
   def create_enemies2
     enemies2 = []
    
-    enemy_img = Image[:enemy]
-    enemy_img.set_color_key([0, 0, 0])
-  
     bone_img = Image[:bone]
     bone_img.set_color_key([0, 0, 0])
   
     bone2_img = Image[:bone2]
     bone2_img.set_color_key([0, 0, 0])
-    
-    laser_img = Image[:laser]
-    laser_img.set_color_key([0, 0, 0])
-    
-    laser2_img = Image[:laser2]
-    laser2_img.set_color_key([0, 0, 0])
     
     bn_x = 0
     bn2_x = 0
@@ -148,6 +111,20 @@ Window.load_resources do
     
     return enemies2
   end
+   #エネミーメソッド4
+  def create_enemies4
+    enemies4 = []
+    
+    laser_base_img = Image[:laser_base]
+    laser_base_img.set_color_key([0, 0, 0])
+    
+    3.times do
+      enemies4 << Laser.new(160, rand(400)+100, laser_base_img, 0)
+    end  
+    
+    return enemies4
+  end
+  
   
   #エネミーメソッド3
   def create_enemies3
@@ -168,33 +145,6 @@ Window.load_resources do
     return enemies3
   end
   
-  #エネミーメソッド4
-  def create_enemies4
-    enemies4 = []
-   
-    enemy_img = Image[:enemy]
-    enemy_img.set_color_key([0, 0, 0])
-  
-    bone_img = Image[:bone]
-    bone_img.set_color_key([0, 0, 0])
-  
-    bone2_img = Image[:bone2]
-    bone2_img.set_color_key([0, 0, 0])
-    
-    laser_img = Image[:laser]
-    laser_img.set_color_key([0, 0, 0])
-    
-    laser2_img = Image[:laser2]
-    laser2_img.set_color_key([0, 0, 0])
-    
-    3.times do
-      enemies4 << Laser.new(160 , rand(600)-100, laser_img, 0)
-    end  
-    
-    return enemies4
-  end
-  
-  
   enemies = create_enemies
   enemies2 = create_enemies2
   enemies3 = create_enemies3
@@ -203,6 +153,13 @@ Window.load_resources do
 
   $hp = 100
   $hp_bar = 248
+  
+  $laser_shot = 0
+  $laser_f = 0
+  $laser_base_shot = 1
+  $count = 0
+  
+  $time_count = 0
   
   Window.loop do
     
@@ -251,18 +208,14 @@ Window.load_resources do
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
             end
-            
             if Input.key_push?(K_RETURN)
                 p Player
                 player = Player.new(384, 468, player_img)
                 enemies = create_enemies
+                $hp = 100
+                $hp_bar = 248
                 GAME_INFO[:scene] = :playing2
             end
-            
-            #HP0でゲームオーバー
-            if $hp == 0
-                GAME_INFO[:scene] = :gameover
-            end 
             
         #ゲーム画面2
         when :playing2
@@ -292,18 +245,12 @@ Window.load_resources do
                 p Player
                 player = Player.new(384, 368, player_img)
                 enemies = create_enemies
+                $hp = 100
+                $hp_bar = 248
                 GAME_INFO[:scene] = :playing3
             end
-       
-            #HP0でゲームオーバー
-            if $hp == 0
-                GAME_INFO[:scene] = :gameover
-            end 
-            
-       #ゲーム画面3
+        #ゲーム画面3
         when :playing3
-            player.update
-            player.draw
             
             ball_break_img = Image[:ball].slice_tiles(2, 2)
             (0..3).each do |num|
@@ -314,7 +261,7 @@ Window.load_resources do
             enemies3.each do |enemy|
                 if enemy.class == Ball && !enemy.vanished?
                     p enemy.y
-                    if enemy.y > 245
+                    if enemy.y > 245 #ある高さでボールがはじける
                         enemies3 << Break.new(enemy.x-5, 250-5, ball_break_img[0], 5, 0)
                         enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[1], 5, 1)
                         enemies3 << Break.new(enemy.x-5, 250+5, ball_break_img[2], 5, 2)
@@ -324,6 +271,9 @@ Window.load_resources do
             end
             Sprite.update(enemies3)
             Sprite.draw(enemies3)
+            
+            player.update
+            player.draw
       
             Sprite.check(player, enemies3)
       
@@ -342,16 +292,21 @@ Window.load_resources do
                 p Player2
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
-                enemies2 = create_enemies2
+                enemies4 = create_enemies4
+                $hp = 100
+                $hp_bar = 248
                 GAME_INFO[:scene] = :playing4
             end
             
-            #HP0でゲームオーバー
-            if $hp == 0
-                GAME_INFO[:scene] = :gameover
-            end 
-        
          when :playing4
+            laser_base_img = Image[:laser_base]
+            laser_base_img.set_color_key([0, 0, 0])
+            laser_img = Image[:laser]
+            laser_img.set_color_key([0, 0, 0])
+            laser_base2_img = Image[:laser_base2]
+            laser_base2_img.set_color_key([0, 0, 0])
+            laser2_img = Image[:laser2]
+            laser2_img.set_color_key([0, 0, 0])
             
             Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
             Sprite.update(enemies4)
@@ -359,9 +314,155 @@ Window.load_resources do
 
             player.update
             player.draw
+            
+            if $count < 4            
+                $time_count += 1
+            end
 
             # 当たり判定
             Sprite.check(player, enemies4)
+            if $laser_base_shot == 0 && $count == 1 #2番目のレーザーの土台
+                if $time_count == 90
+                    3.times do
+                        enemies4 << Laser.new(rand(400)+200, 60, laser_base2_img, 0)
+                    end
+                $laser_base_shot = 1
+                $time_count = 0
+                end
+            end
+            if $laser_base_shot == 0 && $count == 2 #3番目のレーザーの土台
+                if $time_count == 90
+                    3.times do
+                        enemies4 << Laser.new(600, rand(400)+100, laser_base_img, 0)
+                    end
+                $laser_base_shot = 1
+                $time_count = 0
+                end
+            end
+            if $laser_base_shot == 0 && $count == 3 #4番目のレーザーの土台
+                if $time_count == 90
+                    1.times do
+                        enemies4 << Laser.new(160, rand(400)+100, laser_base_img, 0)
+                        enemies4 << Laser.new(rand(400)+200, 60, laser_base2_img, 0)
+                        enemies4 << Laser.new(600, rand(400)+100, laser_base_img, 0)
+                    end
+                $laser_base_shot = 1
+                $time_count = 0
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 0 #最初のレーザー
+                if $time_count == 90
+                    enemies4.each do |enemy2|
+                        enemies4 << Laser2.new(200, enemy2.y, laser_img, 0)
+                    end
+                    $laser_shot = 1
+                    $time_count = 0
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 1 #2番目のレーザー
+                if $time_count == 90
+                    enemies4.each do |enemy5|
+                        if enemy5.class == Laser && !enemy5.vanished?
+                            enemies4 << Laser2.new(enemy5.x, 100, laser2_img, 0)
+                        end
+                    $laser_shot = 1
+                    $time_count = 0
+                    end
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 2 #3番目のレーザー
+                if $time_count == 90
+                    enemies4.each do |enemy7|
+                        if enemy7.class == Laser && !enemy7.vanished?
+                            enemies4 << Laser2.new(-160, enemy7.y, laser_img, 0)
+                        end
+                    $laser_shot = 1
+                    $time_count = 0
+                    end
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 3 #4番目のレーザー
+                if $time_count == 90
+                    enemies4.each do |enemy9|
+                        if enemy9.class == Laser && !enemy9.vanished?
+                            if enemy9.x == 160
+                                enemies4 << Laser2.new(200, enemy9.y, laser_img, 0)
+                            elsif enemy9.y == 60
+                                enemies4 << Laser2.new(enemy9.x, 100, laser2_img, 0)
+                            elsif enemy9.x == 600
+                                enemies4 << Laser2.new(-160, enemy9.y, laser_img, 0)
+                            end
+                        end 
+                    end
+                    $laser_shot = 1
+                    $time_count = 0
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 0 #最初のレーザーを消す
+                enemies4.each do |enemy3|
+                    if enemy3.class == Laser && !enemy3.vanished? #レーザーの土台を消す
+                        enemy3.vanish
+                    end
+                    if enemy3.class == Laser2 && !enemy3.vanished? #レーザーを消す
+                        enemy3.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                $time_count = 0
+                enemies4.clear
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 1 #2番目のレーザーを消す
+                enemies4.each do |enemy6|
+                    if enemy6.class == Laser && !enemy6.vanished? #レーザーの土台を消す
+                        enemy6.vanish
+                    end
+                    if enemy6.class == Laser2 && !enemy6.vanished? #レーザーを消す
+                        enemy6.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                $time_count = 0
+                enemies4.clear
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 2 #3番目のレーザーを消す
+                enemies4.each do |enemy8|
+                    if enemy8.class == Laser && !enemy8.vanished? #レーザーの土台を消す
+                        enemy8.vanish
+                    end
+                    if enemy8.class == Laser2 && !enemy8.vanished? #レーザーを消す
+                        enemy8.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                $time_count = 0
+                enemies4.clear
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 3 #4番目のレーザーを消す
+                enemies4.each do |enemy10|
+                    if enemy10.class == Laser && !enemy10.vanished? #レーザーの土台を消す
+                        enemy10.vanish
+                    end
+                    if enemy10.class == Laser2 && !enemy10.vanished? #レーザーを消す
+                        enemy10.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                $time_count = 0
+                enemies4.clear
+            end
+            
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
@@ -370,28 +471,14 @@ Window.load_resources do
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
                 enemies4 = create_enemies4
-                GAME_INFO[:scene] = :title
-            end
-            
-            #HP0でゲームオーバー
-            if $hp == 0
-                GAME_INFO[:scene] = :gameover
-            end 
-            
-        #ゲームオーバー画面    
-        when :gameover
-            Window.draw_font(280, 280, "GAME OVER", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
-            Window.draw_font(340, 320, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
-            if Input.key_push?(K_ESCAPE)
-                player = Player.new(384, 468, player_img)
-                player2 = Player2.new(384, 468, player_img)
-                enemies = create_enemies
-                enemies2 = create_enemies2
-                enemies3 = create_enemies3
-                enemies4 = create_enemies4
                 $hp = 100
                 $hp_bar = 248
-                GAME_INFO[:scene] = :playing
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 1
+                $count = 0
+                $time_count = 0
+                GAME_INFO[:scene] = :title
             end
       end
   end
