@@ -22,6 +22,8 @@ Image.register(:player_dead2, 'images/player_dead2.png')
 Image.register(:laser, 'images/laser.png')
 Image.register(:laser2, 'images/laser2.png')
 Image.register(:laser4, 'images/laser4.png')
+Image.register(:laser5, 'images/laser5.png')
+Image.register(:laser6, 'images/laser6.png')
 
 Image.register(:flawey, 'images/flawey.png')
 Image.register(:flawey2, 'images/flawey2.png')
@@ -118,7 +120,7 @@ Window.load_resources do
     laser2_img.set_color_key([0, 0, 0])
     
     3.times do
-      enemies4 << Laser.new(160 , rand(600)-100, laser2_img, 0)
+      enemies4 << Laser.new(160, rand(400)+100, laser2_img, 0)
     end  
     
     return enemies4
@@ -154,6 +156,9 @@ Window.load_resources do
   $hp_bar = 248
   
   $laser_shot = 0
+  $laser_f = 0
+  $laser_base_shot = 1
+  $count = 0
   
   Window.loop do
     
@@ -293,8 +298,14 @@ Window.load_resources do
             end
             
          when :playing4
+            laser2_img = Image[:laser2]
+            laser2_img.set_color_key([0, 0, 0])
             laser4_img = Image[:laser4]
             laser4_img.set_color_key([0, 0, 0])
+            laser5_img = Image[:laser5]
+            laser5_img.set_color_key([0, 0, 0])
+            laser6_img = Image[:laser6]
+            laser6_img.set_color_key([0, 0, 0])
             
             Window.draw_font(580, 580, "Press ESC to Continue", Font.new( 20, fontname="源ノ角ゴシック JP",0 ))
             Sprite.update(enemies4)
@@ -305,7 +316,15 @@ Window.load_resources do
 
             # 当たり判定
             Sprite.check(player, enemies4)
-            if $laser_shot == 0
+            if $laser_base_shot == 0 && $count == 1
+                if rand(120) == 1
+                    3.times do
+                        enemies4 << Laser.new(rand(400)+200, 60, laser5_img, 0)
+                    end
+                $laser_base_shot = 1
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 0
                 if rand(120) == 1
                     enemies4.each do |enemy2|
                         enemies4 << Laser2.new(200, enemy2.y, laser4_img, 0)
@@ -313,13 +332,47 @@ Window.load_resources do
                     $laser_shot = 1
                 end
             end
-            if $laser_shot == 1
-                enemies4.each do |enemy3|
-                    if enemy3.class == Laser2 && enemy3.vanished?
-                        Laser.vanish
+            if $laser_base_shot == 1 && $count == 1
+                if rand(120) == 1
+                    enemies4.each do |enemy5|
+                        if enemy5.class == Laser && !enemy5.vanished?
+                            enemies4 << Laser2.new(enemy5.x, 100, laser6_img, 0)
+                        end
+                    $laser_shot = 1
                     end
                 end
             end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1
+                enemies4.each do |enemy3|
+                    if enemy3.class == Laser && !enemy3.vanished?
+                        enemy3.vanish
+                    end
+                    if enemy3.class == Laser2 && !enemy3.vanished?
+                        enemy3.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                enemies4.clear
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 1
+                enemies4.each do |enemy6|
+                    if enemy6.class == Laser && !enemy6.vanished?
+                        enemy6.vanish
+                    end
+                    if enemy6.class == Laser2 && !enemy6.vanished?
+                        enemy6.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                enemies4.clear
+            end
+            
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
@@ -330,7 +383,10 @@ Window.load_resources do
                 enemies4 = create_enemies4
                 $hp = 100
                 $hp_bar = 248
+                $laser_f = 0
                 $laser_shot = 0
+                $laser_base_shot = 1
+                $count = 0
                 GAME_INFO[:scene] = :title
             end
       end

@@ -6,7 +6,7 @@ class Laser < Sprite
     @angle = angle
   end
   def update
-    
+    self.angle = @angle
   end
 end
   

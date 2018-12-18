@@ -7,7 +7,7 @@ class Laser2 < Sprite
   end
   def update
     if rand(120) == 1
-        self.vanish
+        $laser_f = 1
     end
   end
   def hit
