@@ -261,7 +261,7 @@ Window.load_resources do
             enemies3.each do |enemy|
                 if enemy.class == Ball && !enemy.vanished?
                     p enemy.y
-                    if enemy.y > 245
+                    if enemy.y > 245 #ある高さでボールがはじける
                         enemies3 << Break.new(enemy.x-5, 250-5, ball_break_img[0], 5, 0)
                         enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[1], 5, 1)
                         enemies3 << Break.new(enemy.x-5, 250+5, ball_break_img[2], 5, 2)
@@ -315,14 +315,14 @@ Window.load_resources do
             player.update
             player.draw
             
-            if $count < 2            
+            if $count < 4            
                 $time_count += 1
             end
 
             # 当たり判定
             Sprite.check(player, enemies4)
-            if $laser_base_shot == 0 && $count == 1
-                if $time_count == 120
+            if $laser_base_shot == 0 && $count == 1 #2番目のレーザーの土台
+                if $time_count == 90
                     3.times do
                         enemies4 << Laser.new(rand(400)+200, 60, laser_base2_img, 0)
                     end
@@ -330,8 +330,28 @@ Window.load_resources do
                 $time_count = 0
                 end
             end
-            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 0
-                if $time_count == 120
+            if $laser_base_shot == 0 && $count == 2 #3番目のレーザーの土台
+                if $time_count == 90
+                    3.times do
+                        enemies4 << Laser.new(600, rand(400)+100, laser_base_img, 0)
+                    end
+                $laser_base_shot = 1
+                $time_count = 0
+                end
+            end
+            if $laser_base_shot == 0 && $count == 3 #4番目のレーザーの土台
+                if $time_count == 90
+                    1.times do
+                        enemies4 << Laser.new(160, rand(400)+100, laser_base_img, 0)
+                        enemies4 << Laser.new(rand(400)+200, 60, laser_base2_img, 0)
+                        enemies4 << Laser.new(600, rand(400)+100, laser_base_img, 0)
+                    end
+                $laser_base_shot = 1
+                $time_count = 0
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 0 #最初のレーザー
+                if $time_count == 90
                     enemies4.each do |enemy2|
                         enemies4 << Laser2.new(200, enemy2.y, laser_img, 0)
                     end
@@ -339,8 +359,8 @@ Window.load_resources do
                     $time_count = 0
                 end
             end
-            if $laser_base_shot == 1 && $laser_shot == 0&& $count == 1
-                if $time_count == 120
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 1 #2番目のレーザー
+                if $time_count == 90
                     enemies4.each do |enemy5|
                         if enemy5.class == Laser && !enemy5.vanished?
                             enemies4 << Laser2.new(enemy5.x, 100, laser2_img, 0)
@@ -350,12 +370,40 @@ Window.load_resources do
                     end
                 end
             end
-            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 0
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 2 #3番目のレーザー
+                if $time_count == 90
+                    enemies4.each do |enemy7|
+                        if enemy7.class == Laser && !enemy7.vanished?
+                            enemies4 << Laser2.new(-160, enemy7.y, laser_img, 0)
+                        end
+                    $laser_shot = 1
+                    $time_count = 0
+                    end
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 0 && $count == 3 #4番目のレーザー
+                if $time_count == 90
+                    enemies4.each do |enemy9|
+                        if enemy9.class == Laser && !enemy9.vanished?
+                            if enemy9.x == 160
+                                enemies4 << Laser2.new(200, enemy9.y, laser_img, 0)
+                            elsif enemy9.y == 60
+                                enemies4 << Laser2.new(enemy9.x, 100, laser2_img, 0)
+                            elsif enemy9.x == 600
+                                enemies4 << Laser2.new(-160, enemy9.y, laser_img, 0)
+                            end
+                        end 
+                    end
+                    $laser_shot = 1
+                    $time_count = 0
+                end
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 0 #最初のレーザーを消す
                 enemies4.each do |enemy3|
-                    if enemy3.class == Laser && !enemy3.vanished?
+                    if enemy3.class == Laser && !enemy3.vanished? #レーザーの土台を消す
                         enemy3.vanish
                     end
-                    if enemy3.class == Laser2 && !enemy3.vanished?
+                    if enemy3.class == Laser2 && !enemy3.vanished? #レーザーを消す
                         enemy3.vanish
                     end
                 end
@@ -366,13 +414,45 @@ Window.load_resources do
                 $time_count = 0
                 enemies4.clear
             end
-            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 1
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 1 #2番目のレーザーを消す
                 enemies4.each do |enemy6|
-                    if enemy6.class == Laser && !enemy6.vanished?
+                    if enemy6.class == Laser && !enemy6.vanished? #レーザーの土台を消す
                         enemy6.vanish
                     end
-                    if enemy6.class == Laser2 && !enemy6.vanished?
+                    if enemy6.class == Laser2 && !enemy6.vanished? #レーザーを消す
                         enemy6.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                $time_count = 0
+                enemies4.clear
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 2 #3番目のレーザーを消す
+                enemies4.each do |enemy8|
+                    if enemy8.class == Laser && !enemy8.vanished? #レーザーの土台を消す
+                        enemy8.vanish
+                    end
+                    if enemy8.class == Laser2 && !enemy8.vanished? #レーザーを消す
+                        enemy8.vanish
+                    end
+                end
+                $laser_f = 0
+                $laser_shot = 0
+                $laser_base_shot = 0
+                $count += 1
+                $time_count = 0
+                enemies4.clear
+            end
+            if $laser_base_shot == 1 && $laser_shot == 1 && $laser_f == 1 && $count == 3 #4番目のレーザーを消す
+                enemies4.each do |enemy10|
+                    if enemy10.class == Laser && !enemy10.vanished? #レーザーの土台を消す
+                        enemy10.vanish
+                    end
+                    if enemy10.class == Laser2 && !enemy10.vanished? #レーザーを消す
+                        enemy10.vanish
                     end
                 end
                 $laser_f = 0
