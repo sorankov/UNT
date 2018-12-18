@@ -107,24 +107,9 @@ Window.load_resources do
       enemies2 << Bone.new(bn2_x + 2800, 100, bone2_img, 180)
       bn2_x += 400
     end
-
     
     return enemies2
   end
-   #エネミーメソッド4
-  def create_enemies4
-    enemies4 = []
-    
-    laser_base_img = Image[:laser_base]
-    laser_base_img.set_color_key([0, 0, 0])
-    
-    3.times do
-      enemies4 << Laser.new(160, rand(400)+100, laser_base_img, 0)
-    end  
-    
-    return enemies4
-  end
-  
   
   #エネミーメソッド3
   def create_enemies3
@@ -144,6 +129,21 @@ Window.load_resources do
     
     return enemies3
   end
+  
+  #エネミーメソッド4
+  def create_enemies4
+    enemies4 = []
+    
+    laser_base_img = Image[:laser_base]
+    laser_base_img.set_color_key([0, 0, 0])
+    
+    3.times do
+      enemies4 << Laser.new(160, rand(400)+100, laser_base_img, 0)
+    end  
+    
+    return enemies4
+  end
+  
   
   enemies = create_enemies
   enemies2 = create_enemies2
@@ -212,8 +212,6 @@ Window.load_resources do
                 p Player
                 player = Player.new(384, 468, player_img)
                 enemies = create_enemies
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :playing2
             end
             
@@ -245,8 +243,6 @@ Window.load_resources do
                 p Player
                 player = Player.new(384, 368, player_img)
                 enemies = create_enemies
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :playing3
             end
         #ゲーム画面3
@@ -293,8 +289,6 @@ Window.load_resources do
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies4 = create_enemies4
-                $hp = 100
-                $hp_bar = 248
                 GAME_INFO[:scene] = :playing4
             end
             
