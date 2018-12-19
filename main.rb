@@ -853,12 +853,12 @@ Window.load_resources do
                 $laser_base_shot = 1
                 $count = 0  
                 $time_count = 0
-                GAME_INFO[:scene] = :playing
+                GAME_INFO[:scene] = :title
             end
         #ゲームクリア画面    
         when :gameclear
             Window.draw_font(280, 150, "GAME CLEAR", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
-            Window.draw_font(340, 450, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(340, 380, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
             Window.draw_font(220, 220, "SCORE :", Font.new( 30, fontname="源ノ角ゴシック JP",0 ))
             Window.draw_font(343, 222, "残りHP #{$hp} × 100 P", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
             Window.draw_font(220, 260, "TOTAL", Font.new( 30, fontname="源ノ角ゴシック JP",0 ))
@@ -879,7 +879,7 @@ Window.load_resources do
                 $laser_base_shot = 1
                 $count = 0  
                 $time_count = 0
-                GAME_INFO[:scene] = :playing
+                GAME_INFO[:scene] = :title
             end
       end
   end
