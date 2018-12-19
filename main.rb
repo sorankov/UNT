@@ -219,6 +219,11 @@ Window.load_resources do
                 $hp_bar = 248
                 GAME_INFO[:scene] = :playing4
             end
+            
+            if Input.key_push?(K_5)
+                $loop_counter = 0
+                GAME_INFO[:scene] = :gameclear
+            end
         
         
         #ゲーム画面
@@ -814,15 +819,13 @@ Window.load_resources do
                 enemies2 = create_enemies2
                 enemies3 = create_enemies3
                 enemies4 = create_enemies4
-                $hp = 100
-                $hp_bar = 248
                 $laser_loop = 0
                 $laser_shot = 0
                 $laser_f = 0
                 $laser_base_shot = 1
                 $count = 0  
                 $time_count = 0
-                GAME_INFO[:scene] = :title
+                GAME_INFO[:scene] = :gameclear
             end
             
             #HP0でゲームオーバー
@@ -836,7 +839,33 @@ Window.load_resources do
             Window.draw_font(280, 280, "GAME OVER", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
             Window.draw_font(340, 320, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
             if Input.key_push?(K_ESCAPE)
-                player = Player.new(384, 468, player_img)
+                player = Player.new(384, 368, player_img)
+                player2 = Player2.new(384, 468, player_img)
+                enemies = create_enemies
+                enemies2 = create_enemies2
+                enemies3 = create_enemies3
+                enemies4 = create_enemies4
+                $hp = 100
+                $hp_bar = 248
+                $laser_loop = 0
+                $laser_shot = 0
+                $laser_f = 0
+                $laser_base_shot = 1
+                $count = 0  
+                $time_count = 0
+                GAME_INFO[:scene] = :playing
+            end
+        #ゲームクリア画面    
+        when :gameclear
+            Window.draw_font(280, 150, "GAME CLEAR", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(340, 450, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(220, 220, "SCORE :", Font.new( 30, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(343, 222, "残りHP #{$hp} × 100 P", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(220, 260, "TOTAL", Font.new( 30, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(280, 290, "#{$hp*100}", Font.new( 80, fontname="Arial",0 ))
+            Window.draw_font(510, 330, "P", Font.new( 40, fontname="源ノ角ゴシック JP",0 )
+            if Input.key_push?(K_ESCAPE)
+                player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies = create_enemies
                 enemies2 = create_enemies2
