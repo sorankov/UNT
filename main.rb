@@ -150,6 +150,7 @@ Window.load_resources do
   enemies3 = create_enemies3
   enemies4 = create_enemies4
 
+  $loop_counter = 0
 
   $hp = 100
   $hp_bar = 248
@@ -169,7 +170,6 @@ Window.load_resources do
     Window.draw_font(150, 520, "#{$hp} / 100", Font.new( 30, fontname="Arial",0 ))
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
-#    Window.draw(100, 100, Image[:flawey])
     Window.draw( 5, 100, Image[:flawey])
     Window.draw( 605, 100, Image[:flawey2])
     
@@ -194,13 +194,15 @@ Window.load_resources do
 
             player.update
             player.draw
+            
+            $loop_counter += 1
 
             # 当たり判定
             Sprite.check(player, enemies)
             
+
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
-                p Player
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies = create_enemies
@@ -208,12 +210,20 @@ Window.load_resources do
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
             end
-            if Input.key_push?(K_RETURN)
-                p Player
+           
+           if $loop_counter == 1000
                 player = Player.new(384, 468, player_img)
                 enemies = create_enemies
+                $loop_counter = 0
                 GAME_INFO[:scene] = :playing2
             end
+            
+            #HP0でゲームオーバー
+            if $hp == 0
+                $loop_counter = 0
+                GAME_INFO[:scene] = :gameover
+            end
+            
             
         #ゲーム画面2
         when :playing2
@@ -225,12 +235,14 @@ Window.load_resources do
             player2.update
             player2.draw
 
+            $loop_counter += 1
+            
             # 当たり判定
             Sprite.check(player2, enemies2)
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
-                p Player2
+                $loop_counter = 0
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
@@ -239,14 +251,23 @@ Window.load_resources do
                 GAME_INFO[:scene] = :title
             end
             
-            if Input.key_push?(K_RETURN)
-                p Player
+            if $loop_counter == 800
+                $loop_counter = 0
                 player = Player.new(384, 368, player_img)
                 enemies = create_enemies
                 GAME_INFO[:scene] = :playing3
             end
+            
+            #HP0でゲームオーバー
+            if $hp == 0
+                $loop_counter = 0
+                GAME_INFO[:scene] = :gameover
+            end
+            
         #ゲーム画面3
         when :playing3
+        
+            $loop_counter += 1
             
             ball_break_img = Image[:ball].slice_tiles(2, 2)
             (0..3).each do |num|
@@ -256,7 +277,6 @@ Window.load_resources do
             
             enemies3.each do |enemy|
                 if enemy.class == Ball && !enemy.vanished?
-                    p enemy.y
                     if enemy.y > 245 #ある高さでボールがはじける
                         enemies3 << Break.new(enemy.x-5, 250-5, ball_break_img[0], 5, 0)
                         enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[1], 5, 1)
@@ -275,7 +295,7 @@ Window.load_resources do
       
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
-                p Player2
+                $loop_counter = 0
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies3 = create_enemies3
@@ -284,12 +304,18 @@ Window.load_resources do
                 GAME_INFO[:scene] = :title
             end
       
-            if Input.key_push?(K_RETURN)
-                p Player2
+            if $loop_counter == 800
+                $loop_counter = 0
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies4 = create_enemies4
                 GAME_INFO[:scene] = :playing4
+            end
+            
+            #HP0でゲームオーバー
+            if $hp == 0
+                $loop_counter = 0
+                GAME_INFO[:scene] = :gameover
             end
             
          when :playing4
@@ -460,7 +486,7 @@ Window.load_resources do
             
             #ESCキーでリセット
             if Input.key_push?(K_ESCAPE)
-                p Player
+                $loop_counter = 0
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
@@ -473,6 +499,27 @@ Window.load_resources do
                 $count = 0
                 $time_count = 0
                 GAME_INFO[:scene] = :title
+            end
+            
+            #HP0でゲームオーバー
+            if $hp == 0
+                $loop_counter = 0
+                GAME_INFO[:scene] = :gameover
+            end
+            
+        #ゲームオーバー画面    
+        when :gameover
+            Window.draw_font(280, 280, "GAME OVER", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(340, 320, "Press Esc", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
+            if Input.key_push?(K_ESCAPE)
+                player = Player.new(384, 468, player_img)
+                player2 = Player2.new(384, 468, player_img)
+                enemies = create_enemies
+                enemies2 = create_enemies2
+                enemies3 = create_enemies3
+                $hp = 100
+                $hp_bar = 248
+                GAME_INFO[:scene] = :playing
             end
       end
   end
