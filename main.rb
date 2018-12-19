@@ -806,11 +806,22 @@ Window.load_resources do
                 GAME_INFO[:scene] = :title
             end
             
-            if $loop_counter == 800
+            if $loop_counter == 1600
                 $loop_counter = 0
-                player = Player.new(384, 368, player_img)
+                player = Player.new(384, 468, player_img)
                 player2 = Player2.new(384, 468, player_img)
+                enemies = create_enemies
+                enemies2 = create_enemies2
+                enemies3 = create_enemies3
                 enemies4 = create_enemies4
+                $hp = 100
+                $hp_bar = 248
+                $laser_loop = 0
+                $laser_shot = 0
+                $laser_f = 0
+                $laser_base_shot = 1
+                $count = 0  
+                $time_count = 0
                 GAME_INFO[:scene] = :title
             end
             
