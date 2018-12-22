@@ -175,10 +175,15 @@ Window.load_resources do
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
     
-    if $image_counter % 2 == 0
+    if $image_counter % 60 >= 30
         Window.draw( 5, 100, Image[:flawey])
     elsif
         Window.draw( 5, 100, Image[:flawey2])
+    end
+    if $image_counter % 60 >= 30
+        Window.draw( 605, 100, Image[:flawey2])
+    elsif
+        Window.draw( 605, 100, Image[:flawey])
     end
 
     
