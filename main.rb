@@ -191,8 +191,8 @@ Window.load_resources do
         
         #タイトル画面
         when :title
-            Window.draw_font(270, 280, "GAME START", Font.new( 40, fontname="源ノ角ゴシック JP",0 ))
-            Window.draw_font(320, 320, "Press ENTER", Font.new( 25, fontname="源ノ角ゴシック JP",0 ))
+            Window.draw_font(260, 260, "U N T", Font.new( 100, fontname="Jokerman",0 ))
+            Window.draw_font(300, 360, "Press ENTER", Font.new( 30, fontname="源ノ角ゴシック JP",0 ))
             
             if Input.key_push?(K_RETURN)
                 GAME_INFO[:scene] = :playing
