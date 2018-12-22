@@ -10,17 +10,27 @@ class Break < Sprite
   def update
     if @number == 0
         self.x += @speed
-        self.y -= @speed
     elsif @number == 1
         self.x -= @speed
-        self.y -= @speed
     elsif @number == 2
-        self.x += @speed
         self.y += @speed
     elsif @number == 3
+        self.y -= @speed
+    elsif @number == 4
+        self.x += @speed
+        self.y -= @speed
+    elsif @number == 5
+        self.x -= @speed
+        self.y -= @speed
+    elsif @number == 6
+        self.x += @speed
+        self.y += @speed
+    elsif @number == 7
         self.x -= @speed
         self.y += @speed
     end
+    
+    
     if self.y >= Window.height - self.image.height
       self.vanish
     end
@@ -28,9 +38,9 @@ class Break < Sprite
 
   # 他のオブジェクトから衝突された際に呼ばれるメソッド
   def hit
-    if $hp > 10
-        $hp -= 10
-        $hp_bar -= 15
+    if $hp > 6
+        $hp -= 6
+        $hp_bar -= 9
     else
         $hp = 0
         $hp_bar = 101

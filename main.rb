@@ -117,14 +117,14 @@ Window.load_resources do
     ball_img = Image[:ball]
     ball_img.set_color_key([0, 0, 0])
     
-    10.times do
-        enemies3 << Ball.new(rand(800), rand(600)-600, ball_img, 2)
+    15.times do
+        enemies3 << Ball.new(rand(800), rand(600)-600, ball_img, 4)
     end
-    12.times do
-        enemies3 << Ball.new(rand(800), rand(600)-1200, ball_img, 2)
+    15.times do
+        enemies3 << Ball.new(rand(800), rand(600)-1200, ball_img, 4)
     end
-    10.times do
-        enemies3 << Ball.new(rand(800), rand(600)-1800, ball_img, 2)
+    15.times do
+        enemies3 << Ball.new(rand(800), rand(600)-1800, ball_img, 4)
     end
     
     return enemies3
@@ -331,11 +331,16 @@ Window.load_resources do
             enemies3.each do |enemy|
                 if enemy.class == Ball && !enemy.vanished?
                     if enemy.y > 245 #ある高さでボールがはじける
-                        enemies3 << Break.new(enemy.x-5, 250-5, ball_break_img[0], 5, 0)
-                        enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[1], 5, 1)
-                        enemies3 << Break.new(enemy.x-5, 250+5, ball_break_img[2], 5, 2)
-                        enemies3 << Break.new(enemy.x+5, 250+5, ball_break_img[3], 5, 3)
+                        enemies3 << Break.new(enemy.x+5, 250, ball_break_img[0], 3, 0)
+                        enemies3 << Break.new(enemy.x-5, 250, ball_break_img[0], 3, 1)
+                        enemies3 << Break.new(enemy.x+5, 250+5, ball_break_img[0], 3, 2)
+                        enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[0], 3, 3)
+                        enemies3 << Break.new(enemy.x-5, 250-5, ball_break_img[0], 3, 4)
+                        enemies3 << Break.new(enemy.x+5, 250-5, ball_break_img[1], 3, 5)  
+                        enemies3 << Break.new(enemy.x-5, 250+5, ball_break_img[2], 3, 6)    
+                        enemies3 << Break.new(enemy.x+5, 250+5, ball_break_img[3], 3, 7)
                     end
+                    
                 end
             end
             Sprite.update(enemies3)
@@ -357,7 +362,7 @@ Window.load_resources do
                 GAME_INFO[:scene] = :title
             end
       
-            if $loop_counter == 1000
+            if $loop_counter == 600
                 $loop_counter = 0
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
