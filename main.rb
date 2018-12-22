@@ -150,6 +150,8 @@ Window.load_resources do
   enemies3 = create_enemies3
   enemies4 = create_enemies4
 
+  
+  $image_counter = 0
   $loop_counter = 0
 
   $hp = 100
@@ -164,6 +166,7 @@ Window.load_resources do
   $time_count = 0
   
   Window.loop do
+    $image_counter += 1
     
     Window.draw_box(200, 100, 600, 500, [255, 255, 255, 255], 0)
     Window.draw_box(198, 98, 598, 498, [255, 255, 255, 255], 0)
@@ -171,9 +174,12 @@ Window.load_resources do
     Window.draw_font(150, 520, "#{$hp} / 100", Font.new( 30, fontname="Arial",0 ))
     Window.draw_box(100, 550, 250, 580, [255, 255, 255, 255], 0)
     Window.draw_box_fill(102, 552, $hp_bar, 578, [255, 255, 255, 255], 0)
-    Window.draw( 5, 100, Image[:flawey])
-    Window.draw( 605, 100, Image[:flawey2])
     
+    if $image_counter % 2 == 0
+        Window.draw( 5, 100, Image[:flawey])
+    elsif
+        Window.draw( 5, 100, Image[:flawey2])
+    end
 
     
     case GAME_INFO[:scene]
@@ -246,6 +252,7 @@ Window.load_resources do
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies = create_enemies
+                $loop_counter = 0
                 $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
@@ -286,6 +293,7 @@ Window.load_resources do
                 player = Player.new(384, 368, player_img)
                 player2 = Player2.new(384, 468, player_img)
                 enemies2 = create_enemies2
+                $loop_counter = 0
                 $hp = 100
                 $hp_bar = 248
                 GAME_INFO[:scene] = :title
